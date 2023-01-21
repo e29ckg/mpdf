@@ -36,8 +36,8 @@ $name_text_align = 'center';
 $name_x = 0;
 $text_y = 69;
 
-if(isset($template->template_name)){$template_name = $template->template_name;}
-if(isset($text->text_size)){$size = $text->text_size;}
+if(isset($text->text_name)){$text_name = $text->text_name;}
+if(isset($text->text_size)){$text_size = $text->text_size;}
 if(isset($text->text_font)){$text_font = $text->text_font;}
 if(isset($text->text_y)){$text_y = $text->text_y;}
 
