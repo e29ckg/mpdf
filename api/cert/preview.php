@@ -17,28 +17,29 @@ foreach($files as $file) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-$data   = $data->data;
+$template   = $data->template;
+$text   = $data->text;
 
-// $uname   = $data->uname;
-if(isset($data->template)){
-    $tm = '../../../pkkjc_cert/template/'.$data->template;
+// $text_name   = $data->text_name;
+if(isset($template->template_url)){
+    $tm = '../../../'.$template->template_url;
 }else{
     $tm = '../../../pkkjc_cert/template/test.pdf';
 }
 // $tm     = '../../../pkkjc_cert/template/'.$data->template;
 $name_file = time().'.pdf';
 $output = '../../output/preview/'.$name_file;
-$uname = 'นายพเยาว์ เยี่ยม';
-$name_font = 'prompt';
-$name_font_size = 36;
+$text_name = 'นายพเยาว์ เยี่ยม';
+$text_font = 'prompt';
+$text_size = 36;
 $name_text_align = 'center';
 $name_x = 0;
-$name_y = 69;
+$text_y = 69;
 
-if(isset($data->uname)){$uname = $data->uname;}
-if(isset($data->name_font_size)){$name_font_size = $data->name_font_size;}
-if(isset($data->name_font)){$name_font = $data->name_font;}
-if(isset($data->name_y)){$name_y = $data->name_y;}
+if(isset($template->template_name)){$template_name = $template->template_name;}
+if(isset($text->text_size)){$size = $text->text_size;}
+if(isset($text->text_font)){$text_font = $text->text_font;}
+if(isset($text->text_y)){$text_y = $text->text_y;}
 
 
 $link_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
@@ -80,12 +81,12 @@ $mpdf = new \Mpdf\Mpdf([
     // 'format' => [235, 108],    
     // 'default_font' => 'kanit',
     // 'default_font' => 'NotoSerifThai',
-    'default_font' => $name_font,
-    'default_font_size' => $name_font_size
+    'default_font' => $text_font,
+    'default_font_size' => $text_size
 ]);
 $mpdf->useDictionaryLBR = false;
 
-$mpdf->SetTitle($uname);
+$mpdf->SetTitle($text_name);
 $mpdf->SetAuthor('pkkjc');
 $mpdf->SetSubject('pkkjc-cert');
 $mpdf->SetCreator('pkkjc.coj');
@@ -101,9 +102,9 @@ $tplId = $mpdf->importPage($pagecount);
 $actualsize = $mpdf->useTemplate($tplId);
 
 $data = '<div style="text-align:'.$name_text_align.';font-weight: bold;">'
-        .$uname.
+        .$text_name.
         '</div>';
-$mpdf->WriteFixedPosHTML($data, $name_x, $name_y, 297, 210, 'auto');
+$mpdf->WriteFixedPosHTML($data, $name_x, $text_y, 297, 210, 'auto');
 
 // $qr_code = '<img id="imgurl" src="https://chart.googleapis.com/chart?cht=qr&amp;chl=http://www.diw.go.th&amp;chs=80x80&amp;choe=UTF-8" border="0" width="80" height="80">';
 // $mpdf->WriteFixedPosHTML($qr_code, 15, 175, 297, 210, 'auto');
