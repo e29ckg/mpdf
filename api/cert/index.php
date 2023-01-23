@@ -28,9 +28,7 @@ if(isset($template->template_url)){
     $tm = '../../../pkkjc_cert/template/test.pdf';
 }
 // $tm     = '../../../pkkjc_cert/template/'.$data->template;
-$name_file = time().'.pdf';
-$output = '../../output/preview/'.$name_file;
-$text_name = 'นายพเยาว์ เยี่ยม';
+$text_name = '';
 $text_font = 'prompt';
 $text_size = 36;
 $name_text_align = 'center';
@@ -41,6 +39,11 @@ if(isset($data->name)){$text_name = $data->name;}
 if(isset($text->text_size)){$text_size = $text->text_size;}
 if(isset($text->text_font)){$text_font = $text->text_font;}
 if(isset($text->text_y)){$text_y = $text->text_y;}
+
+// $name_file = time().'.pdf';
+$name_file = $text_name.'.pdf';
+
+$output = '../../output/preview/'.$name_file;
 
 
 $link_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/";
